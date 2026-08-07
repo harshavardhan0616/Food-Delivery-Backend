@@ -2,8 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
-const User = require("./models/User");
-const Order = require("./models/Order");
+const User = require("./models/user");
+const Order = require("./models/order");
 const app = express();
 
 // Middleware
