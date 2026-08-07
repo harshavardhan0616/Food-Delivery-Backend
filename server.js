@@ -1,10 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const User = require("./models/user");
-const Order = require("./models/order");
 require("dotenv").config();
-
+const User = require("./models/User");
+const Order = require("./models/Order");
 const app = express();
 
 // Middleware
@@ -108,42 +107,39 @@ app.post("/login", async (req, res) => {
 });
 // ================= PLACE ORDER =================
 app.post("/place-order", async (req, res) => {
-
     try {
 
-        const { phone, items, totalAmount, paymentMethod } = req.body;
+        console.log("Received Order:", req.body);
+
+        const { phone, address, items, totalAmount, paymentMethod } = req.body;
 
         const newOrder = new Order({
-
             phone,
+            address,
             items,
             totalAmount,
             paymentMethod
-
         });
 
         await newOrder.save();
 
-        res.status(201).json({
+        console.log("Order Saved Successfully!");
 
+        res.status(201).json({
             success: true,
             message: "Order Placed Successfully"
-
         });
 
     } catch (err) {
 
-        console.log(err);
+        console.log("Order Error:", err);
 
         res.status(500).json({
-
             success: false,
             message: err.message
-
         });
 
     }
-
 });
 // Start Server
 app.listen(5000, () => {
